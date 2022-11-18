@@ -4,7 +4,7 @@ import robocode.HitByBulletEvent;
 import robocode.Robot;
 import robocode.ScannedRobotEvent;
 
-public class OurRobot extends Robot {
+public class Mental extends Robot {
 
     /**
      * MyFirstRobot's run method - Seesaw

@@ -14,20 +14,20 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class RobocodeRunner {
-
+	private static double score;
 	public static void main(String[] args) throws IOException {
 
-		String nazevTridyMehoRobota = "OurRobot";
-		String seznamProtivniku = "Crazy, Corners, Fire";
+		String individual_tank = "Mental";
+		String enemy_list = "Crazy, Corners, Fire";
 
-		runRobocode(nazevTridyMehoRobota, seznamProtivniku);
+		runRobocode(individual_tank, enemy_list);
 	}
 
-	public static void runRobocode(String mujRobot, String seznamProtivniku) throws IOException {
+	public static double runRobocode(String individual_tank, String enemy_list) throws IOException {
 
 		// create src and dest path for compiling
-		String src = "src/main/java/sample/" + mujRobot + ".java";
-		String dst = "robots/sample/" + mujRobot + ".java";
+		String src = "src/main/java/sample/" + individual_tank + ".java";
+		String dst = "robots/sample/" + individual_tank + ".java";
 		// compile our created robot and store it to robots/samples
 		File source = new File(src);
 		File dest = new File(dst);
@@ -35,17 +35,17 @@ public class RobocodeRunner {
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		compiler.run(null, System.out, System.out, dst);
 		// remove all whitespaces
-		seznamProtivniku = seznamProtivniku.replaceAll("\\s", "");
+		enemy_list = enemy_list.replaceAll("\\s", "");
 		// create list of tanks to fight
 
-		String tanks[] = seznamProtivniku.split(",");
+		String tanks[] = enemy_list.split(",");
 		String finalListOfTanks = "";
 		for (String string : tanks) {
 			string = "sample." + string + ",";
 			finalListOfTanks += string;
 		}
 
-		finalListOfTanks += "sample." + mujRobot;
+		finalListOfTanks += "sample." + individual_tank;
 
 		// ("sample.Corners, sample.MujRobot"
 
@@ -62,7 +62,7 @@ public class RobocodeRunner {
 		// Show the battles
 		engine.setVisible(true);
 
-		// Setup the battle specification
+		// Set up the battle specification
 
 		int numberOfRounds = 5;
 		BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
@@ -76,6 +76,10 @@ public class RobocodeRunner {
 
 		for (BattleResults result : battleListener.getResults()) {
 			System.out.println(result.getTeamLeaderName() + " - " + result.getScore());
+
+			if(result.getTeamLeaderName() == "Mental") {
+				score = result.getScore();
+			}
 		}
 
 		// Cleanup our RobocodeEngine
@@ -83,5 +87,6 @@ public class RobocodeRunner {
 
 		// Make sure that the Java VM is shut down properly
 		System.exit(0);
+		return score;
 	}
 }
