@@ -3,3 +3,4 @@
 .idea
 *.iml
 target/
+log4j_jgap.log

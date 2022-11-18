@@ -17,55 +17,55 @@
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.api</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.core</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.ui</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.samples</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.sound</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.battle</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.roborumble</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.repository</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.robocode</groupId>
             <artifactId>robocode.host</artifactId>
-            <version>1.9.4.7</version>
+            <version>1.9.4.0</version>
         </dependency>
 
         <dependency>
