@@ -22,9 +22,13 @@ public class Ahead extends CommandGene {
 
     public Object execute_object(ProgramChromosome c, int n, Object[] args) {
         Random rand = new Random();
+        HashMap<SubTreeTypes, String> map = (HashMap<SubTreeTypes, String>) args[0];
+        SubTreeTypes type = (SubTreeTypes) args[1];
         String power = String.valueOf(rand.nextInt(maxPower));
-
-        return "ahead(" + power + ");\n";
+        String currentString = map.get(type);
+        currentString += "ahead(" + power + ");\n";
+        map.put(type, currentString);
+        return map;
     }
 
     @Override
