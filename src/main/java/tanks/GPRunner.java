@@ -1,7 +1,11 @@
 package tanks;
 
-import node_functions.FireGP;
-import node_functions.RobotRep;
+
+import node_functions.Run;
+import node_terminals.Ahead;
+import node_terminals.Fire;
+import node_terminals.TurnLeft;
+import node_terminals.TurnRight;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.GPProblem;
@@ -10,8 +14,9 @@ import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.GPGenotype;
 
 public class GPRunner extends GPProblem {
+    private static int numOfTerminals = 5;
     private static int NUM_OF_GENERATIONS = 1;
-    private static int MAX_TREE_DEPTH = 5;
+    private static int MAX_TREE_DEPTH = 1;
     private static int MIN_TREE_DEPTH = 1;
     private static float MUTATION_PROB = 0.0075f;
     private static int POP_SIZE = 5;
@@ -44,12 +49,16 @@ public class GPRunner extends GPProblem {
 
         //TODO create our own fitness function utilizing robocode scoring
         config.setFitnessFunction(new OurFitnessFunction());
-        config.setInitStrategy(new GPInitStrategy(RobotRep.class));
 
         //TODO define functions and terminals for this node set
         CommandGene[][] nodeSets = {{
-            new RobotRep(config, 0, Object.class),
-            new FireGP(config, 0, Integer.class),
+            //Set of functions
+            new Run(config, numOfTerminals),
+            //Set of terminals
+            new Ahead(config, 100),
+                new Fire(config, 1),
+                new TurnLeft(config, 15),
+                new TurnRight(config, 15),
         }};
         //return null;
         return GPGenotype.randomInitialGenotype(config, types, argTypes, nodeSets, 10, true);

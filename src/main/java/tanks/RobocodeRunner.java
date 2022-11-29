@@ -17,13 +17,13 @@ public class RobocodeRunner {
 	private static double score;
 	public static void main(String[] args) throws IOException {
 
-		String individual_tank = "Mental";
+		String individual_tank = "EnderTank";
 		String enemy_list = "Crazy, Corners, Fire";
 
-		runRobocode(individual_tank, enemy_list);
+		runRobocode(individual_tank, enemy_list, true);
 	}
 
-	public static double runRobocode(String individual_tank, String enemy_list) throws IOException {
+	public static double runRobocode(String individual_tank, String enemy_list, boolean showBattle) throws IOException {
 
 		// create src and dest path for compiling
 		String src = "src/main/java/sample/" + individual_tank + ".java";
@@ -47,27 +47,22 @@ public class RobocodeRunner {
 
 		finalListOfTanks += "sample." + individual_tank;
 
-		// ("sample.Corners, sample.MujRobot"
-
 		// Battle listener used for receiving battle events
 		BattleObserver battleListener = new BattleObserver();
 
 		// Create the RobocodeEngine
-		RobocodeEngine engine = new RobocodeEngine(); // Run from current
-														// working directory
+		RobocodeEngine engine = new RobocodeEngine(); // Run from current working directory
+		RobocodeEngine.setLogMessagesEnabled(false);
 
 		// Add battle listener to our RobocodeEngine
 		engine.addBattleListener(battleListener);
 
 		// Show the battles
-		engine.setVisible(true);
+		engine.setVisible(showBattle);
 
 		// Set up the battle specification
-
 		int numberOfRounds = 5;
-		BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
-		// RobotSpecification[] selectedRobots =
-		// engine.getLocalRepository("sample.Corners, sample.MujRobot");
+		BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600);
 		RobotSpecification[] selectedRobots = engine.getLocalRepository(finalListOfTanks);
 
 		BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
@@ -75,10 +70,11 @@ public class RobocodeRunner {
 		engine.runBattle(battleSpec, true/* wait till the battle is over */);
 
 		for (BattleResults result : battleListener.getResults()) {
-			System.out.println(result.getTeamLeaderName() + " - " + result.getScore());
+			//System.out.println(result.getTeamLeaderName() + " - " + result.getScore());
 
-			if(result.getTeamLeaderName() == "Mental") {
+			if(result.getTeamLeaderName().equals("sample.Genesis")) {
 				score = result.getScore();
+				System.out.println(result.getTeamLeaderName() + " - " + score);
 			}
 		}
 
@@ -86,7 +82,6 @@ public class RobocodeRunner {
 		engine.close();
 
 		// Make sure that the Java VM is shut down properly
-		System.exit(0);
 		return score;
 	}
 }

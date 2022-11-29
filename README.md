@@ -10,7 +10,7 @@ This project was created by Filip Wojnar and Ondřej Chudáček.
 # How-To-Run:
 
 #### Purely robocode:
-    To run solely Robocode app run /src/main/java/Robocode/Runner
+    To run solely Robocode app run /src/main/java/RobocodeRunner
 
 #### Robocode with genetic programming
     To run Robocode app with genetic programming run /src/main/java/GPRunner
