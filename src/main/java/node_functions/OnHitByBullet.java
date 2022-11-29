@@ -1,6 +1,5 @@
 package node_functions;
 
-
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
@@ -9,13 +8,12 @@ import tanks.SubTreeTypes;
 import java.util.HashMap;
 import java.util.Random;
 
-//TODO define behaviour for this function (and create many others)
-public class OnScannedRobot extends CommandGene {
+public class OnHitByBullet extends CommandGene {
 
     private int max_length;
     private HashMap<SubTreeTypes, String> map;
 
-    public OnScannedRobot(GPConfiguration config, int max_length) throws Exception {
+    public OnHitByBullet(GPConfiguration config, int max_length) throws Exception {
         super(config, max_length, CommandGene.CharacterClass);
         this.max_length = max_length;
     }
@@ -25,7 +23,7 @@ public class OnScannedRobot extends CommandGene {
         Random rand = new Random();
         map = (HashMap<SubTreeTypes, String>) args[0];
 
-        SubTreeTypes newType = SubTreeTypes.ON_SCANNED_ROBOT;
+        SubTreeTypes newType = SubTreeTypes.ON_HIT_BY_BULLET;
         String currentString = map.get(newType);
         int randLength = rand.nextInt(this.max_length);
         for(int i = 0; i < randLength; i++) {
@@ -39,6 +37,6 @@ public class OnScannedRobot extends CommandGene {
 
     @Override
     public String toString() {
-        return "OnScannedRobot";
+        return "OnHitByBullet";
     }
 }

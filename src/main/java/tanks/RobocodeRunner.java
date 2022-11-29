@@ -65,6 +65,7 @@ public class RobocodeRunner {
 		// Set up the battle specification
 
 		int numberOfRounds = 5;
+		//NECHAT NA 800x600. Potreba pri tvorbe tanku
 		BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
 		// RobotSpecification[] selectedRobots =
 		// engine.getLocalRepository("sample.Corners, sample.MujRobot");

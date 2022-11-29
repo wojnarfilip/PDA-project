@@ -1,7 +1,7 @@
 package tanks;
 
-import node_functions.FireGP;
-import node_functions.RobotRep;
+import node_functions.*;
+import node_terminals.*;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.GPProblem;
@@ -15,6 +15,7 @@ public class GPRunner extends GPProblem {
     private static int MIN_TREE_DEPTH = 1;
     private static float MUTATION_PROB = 0.0075f;
     private static int POP_SIZE = 5;
+    private static int MAX_LENGTH = 10;
 
     public GPRunner() throws InvalidConfigurationException {
         super(new GPConfiguration());
@@ -47,10 +48,25 @@ public class GPRunner extends GPProblem {
         config.setInitStrategy(new GPInitStrategy(RobotRep.class));
 
         //TODO define functions and terminals for this node set
-        CommandGene[][] nodeSets = {{
-            new RobotRep(config, 0, Object.class),
-            new FireGP(config, 0, Integer.class),
-        }};
+        CommandGene[][] nodeSets = new CommandGene[0][];
+        try {
+            nodeSets = new CommandGene[][]{{
+                //Functions
+                new GetEnergy(config, MAX_LENGTH, 3),
+                new OnHitByBullet(config, MAX_LENGTH),
+                new OnHitWall(config, MAX_LENGTH),
+                new OnScannedRobot(config, MAX_LENGTH),
+                new PositionCheck(config, MAX_LENGTH, 800, 600),
+                //Terminals
+                new Ahead(config, 600),
+                new Back(config, 600),
+                new Fire(config, 10),
+                new TurnLeft(config),
+                new TurnRight(config)
+            }};
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //return null;
         return GPGenotype.randomInitialGenotype(config, types, argTypes, nodeSets, 10, true);
     }
