@@ -1,5 +1,6 @@
 package tanks;
 
+import parser.GPParser;
 import robocode.BattleResults;
 import robocode.control.BattleSpecification;
 import robocode.control.BattlefieldSpecification;
@@ -20,7 +21,7 @@ public class RobocodeRunner {
 		String individual_tank = "EnderTank";
 		String enemy_list = "Crazy, Corners, Fire";
 
-		runRobocode(individual_tank, enemy_list, true);
+		runRobocode(individual_tank, enemy_list, false);
 	}
 
 	public static double runRobocode(String individual_tank, String enemy_list, boolean showBattle) throws IOException {
@@ -33,7 +34,12 @@ public class RobocodeRunner {
 		File dest = new File(dst);
 		Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		compiler.run(null, System.out, System.out, dst);
+
+		if(compiler.run(null, System.out, System.out, dst) != 0) {
+			GPParser.deleteFile("Genesis");
+			throw new IOException();
+		}
+
 		// remove all whitespaces
 		enemy_list = enemy_list.replaceAll("\\s", "");
 		// create list of tanks to fight
@@ -52,13 +58,14 @@ public class RobocodeRunner {
 
 		// Create the RobocodeEngine
 		RobocodeEngine engine = new RobocodeEngine(); // Run from current working directory
-		RobocodeEngine.setLogMessagesEnabled(false);
 
 		// Add battle listener to our RobocodeEngine
 		engine.addBattleListener(battleListener);
 
 		// Show the battles
 		engine.setVisible(showBattle);
+
+		RobocodeEngine.setLogMessagesEnabled(false);
 
 		// Set up the battle specification
 		int numberOfRounds = 5;
