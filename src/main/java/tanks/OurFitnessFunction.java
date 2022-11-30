@@ -1,7 +1,15 @@
 package tanks;
 
+import node_functions.OnScannedRobot;
+import node_functions.Run;
+import node_terminals.*;
+import org.jgap.InvalidConfigurationException;
+import org.jgap.gp.CommandGene;
 import org.jgap.gp.GPFitnessFunction;
 import org.jgap.gp.IGPProgram;
+import org.jgap.gp.impl.DeltaGPFitnessEvaluator;
+import org.jgap.gp.impl.GPConfiguration;
+import org.jgap.gp.impl.GPGenotype;
 import parser.GPParser;
 
 import java.io.BufferedWriter;
@@ -10,7 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class OurFitnessFunction extends GPFitnessFunction {
-    private static double tank_score = Double.MIN_VALUE;
+    public static double tank_score = -1;
     String individual_tank = "Genesis";
     String enemy_list = "Crazy, Corners, Fire";
     private static String Header="package sample;\r\n" +  "\r\n" +  "import robocode.*;" + "\r\n" + "public class Genesis extends Robot {";
@@ -24,18 +32,19 @@ public class OurFitnessFunction extends GPFitnessFunction {
         try {
             GPParser.createFile(individual_tank, "src/main/java/sample/");
             GPParser.writeToFile(robot, individual_tank, "src/main/java/sample/");
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
         try {
             evolve(robot, RobocodeRunner.runRobocode(individual_tank ,enemy_list, false));
             return tank_score;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return 0;
         }
     }
 
-    //TODO once everything works fine it might be good to do more sophisticated evolve function and choose more individuals at the same time (Not sure if this is correct way of thinking)
     public void evolve(String robot, double current_tank_score) throws IOException {
         //Update best solution value
         if(tank_score < current_tank_score) {
@@ -44,6 +53,7 @@ public class OurFitnessFunction extends GPFitnessFunction {
             //Save best current robot into a file, overwrite every time better solution is found
             GPParser.createFile("EnderTank", "src/main/java/sample/");
             GPParser.writeToFile(robot, "EnderTank", "src/main/java/sample/");
+            GPParser.renameRobotClass("Genesis", "EnderTank");
         }
     }
 }
