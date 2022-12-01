@@ -1,14 +1,13 @@
 package tanks;
 
 
-import node_functions.DeclareRoboClass;
-import node_functions.OnScannedRobot;
-import node_functions.Run;
+import node_functions.*;
 import node_terminals.*;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.GPProblem;
 import org.jgap.gp.IGPProgram;
+import org.jgap.gp.function.SubProgram;
 import org.jgap.gp.impl.DeltaGPFitnessEvaluator;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.GPGenotype;
@@ -16,10 +15,10 @@ import org.jgap.gp.impl.GPGenotype;
 public class GPRunner extends GPProblem {
     private static int numOfTerminals = 5;
     private static int NUM_OF_GENERATIONS = 1;
-    private static int MAX_TREE_DEPTH = 3;
+    private static int MAX_TREE_DEPTH = 6;
     private static int MIN_TREE_DEPTH = 1;
     private static float MUTATION_PROB = 0.0075f;
-    private static int POP_SIZE = 250;
+    private static int POP_SIZE = 500;
 
     public GPRunner() throws InvalidConfigurationException {
         super(new GPConfiguration());
@@ -48,7 +47,9 @@ public class GPRunner extends GPProblem {
         //config.setStrictProgramCreation(true);
 
         Class[] types = { CommandGene.CharacterClass };
-        Class[][] argTypes = { {} };
+        Class[][] argTypes = { {
+            String.class
+        } };
 
         //TODO work on RobotClassValidator
         config.setFitnessFunction(new OurFitnessFunction());
@@ -57,17 +58,22 @@ public class GPRunner extends GPProblem {
 
         //TODO define functions and terminals for this node set
         CommandGene[][] nodeSets = {{
-            //Set of functions
-                new DeclareRoboClass(config, 2),
+
+                new DeclareRoboClass(config, 4),
                 new Run(config, numOfTerminals),
                 new OnScannedRobot(config, numOfTerminals),
-            //Set of terminals
-                new Ahead(config, 100),
-                new Back(config, 75),
-                new Fire(config, 3),
-                new TurnLeft(config, 15),
-                new TurnRight(config, 15),
-                new TurnGunLeft(config, 360),
+                new OnHitByBullet(config, numOfTerminals),
+                new OnHitWall(config, numOfTerminals),
+                new OnBulletHit(config, numOfTerminals),
+                //new PostionCheck(config, numOfTerminals - 2, 800, 600),
+
+                new Ahead(config, 200, 25),
+                new Back(config, 200, 25),
+                new Fire(config, 2, 1),
+                new TurnLeft(config, 150, 20),
+                new TurnRight(config, 150, 20),
+                new TurnGunLeft(config, 50, 20),
+                new ScanSurroundigs(config)
         }};
 
         GPGenotype result = GPGenotype.randomInitialGenotype(
@@ -75,7 +81,7 @@ public class GPRunner extends GPProblem {
                 types,
                 argTypes,
                 nodeSets,
-                20,
+                25,
                 true
         );
         for (int i = 0; i < POP_SIZE; i++) {

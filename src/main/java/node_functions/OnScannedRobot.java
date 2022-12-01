@@ -5,6 +5,8 @@ import org.jgap.gp.CommandGene;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
 
+import java.util.Random;
+
 public class OnScannedRobot extends CommandGene {
     private int a_arity;
 
