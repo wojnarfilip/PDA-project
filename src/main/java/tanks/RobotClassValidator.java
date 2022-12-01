@@ -20,7 +20,6 @@ public class RobotClassValidator implements INodeValidator {
 
         alreadyUsed.add(DeclareRoboClass.class);
         if (programChromosome != null){
-            //System.out.println("Some program exists");
             return true;
         }
 
@@ -31,6 +30,15 @@ public class RobotClassValidator implements INodeValidator {
         if (node.getArity(null) == 0 && rootNode.getClass().equals(DeclareRoboClass.class)) {
             return false;
         }
+
+		if (node.getClass().equals(IfDistanceFire.class) && !rootNode.getClass().equals(OnScannedRobot.class)){
+			if (alreadyUsed.contains(IfDistanceFire.class)) {
+				return false;
+			} else {
+				alreadyUsed.add(node.getClass());
+				return true;
+			}
+		}
 
 		if (node.getArity(null) != 0) {
 			if (alreadyUsed.contains(node.getClass())) {

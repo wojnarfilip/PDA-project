@@ -7,7 +7,6 @@ import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.GPProblem;
 import org.jgap.gp.IGPProgram;
-import org.jgap.gp.function.SubProgram;
 import org.jgap.gp.impl.DeltaGPFitnessEvaluator;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.GPGenotype;
@@ -15,10 +14,10 @@ import org.jgap.gp.impl.GPGenotype;
 public class GPRunner extends GPProblem {
     private static int numOfTerminals = 5;
     private static int NUM_OF_GENERATIONS = 1;
-    private static int MAX_TREE_DEPTH = 6;
-    private static int MIN_TREE_DEPTH = 1;
-    private static float MUTATION_PROB = 0.0075f;
-    private static int POP_SIZE = 500;
+    private static int MAX_TREE_DEPTH = 5;
+    private static int MIN_TREE_DEPTH = 2;
+    private static float CROSS_OVER_PROB = 0.02f;
+    private static int POP_SIZE = 5000;
 
     public GPRunner() throws InvalidConfigurationException {
         super(new GPConfiguration());
@@ -43,6 +42,7 @@ public class GPRunner extends GPProblem {
         config.setMinInitDepth(MIN_TREE_DEPTH);
         config.setMaxInitDepth(MAX_TREE_DEPTH);
         config.setPopulationSize(POP_SIZE);
+        config.setCrossoverProb(CROSS_OVER_PROB);
         //config.setMutationProb(MUTATION_PROB);
         //config.setStrictProgramCreation(true);
 
@@ -61,19 +61,20 @@ public class GPRunner extends GPProblem {
 
                 new DeclareRoboClass(config, 4),
                 new Run(config, numOfTerminals),
-                new OnScannedRobot(config, numOfTerminals),
-                new OnHitByBullet(config, numOfTerminals),
-                new OnHitWall(config, numOfTerminals),
-                new OnBulletHit(config, numOfTerminals),
+                new OnScannedRobot(config, 4),
+                new OnHitByBullet(config, 3),
+                new OnHitWall(config, 3),
+                //new OnBulletHit(config, numOfTerminals),
                 //new PostionCheck(config, numOfTerminals - 2, 800, 600),
 
-                new Ahead(config, 200, 25),
-                new Back(config, 200, 25),
+                new Ahead(config, 70, 30),
+                new Back(config, 50, 25),
                 new Fire(config, 2, 1),
-                new TurnLeft(config, 150, 20),
-                new TurnRight(config, 150, 20),
-                new TurnGunLeft(config, 50, 20),
-                new ScanSurroundigs(config)
+                new IfDistanceFire(config, 2, 1, 200),
+                new TurnLeft(config, 45, 15),
+                new TurnRight(config, 45, 15),
+                //new TurnGunLeft(config, 50, 20),
+                new ScanSurroundings(config)
         }};
 
         GPGenotype result = GPGenotype.randomInitialGenotype(
@@ -90,7 +91,7 @@ public class GPRunner extends GPProblem {
             System.out.println(randomProgram.toStringNorm(0));
         }
 
-        return GPGenotype.randomInitialGenotype(config, types, argTypes, nodeSets, 25, true);
+        return GPGenotype.randomInitialGenotype(config, types, argTypes, nodeSets, 30, true);
     }
 
 }

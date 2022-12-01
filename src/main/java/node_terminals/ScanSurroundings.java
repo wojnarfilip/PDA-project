@@ -5,16 +5,14 @@ import org.jgap.gp.CommandGene;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
 
-import java.util.Random;
-
-public class ScanSurroundigs extends CommandGene {
+public class ScanSurroundings extends CommandGene {
     int value;
 
-    public ScanSurroundigs(GPConfiguration a_conf) throws InvalidConfigurationException {
+    public ScanSurroundings(GPConfiguration a_conf) throws InvalidConfigurationException {
         this(a_conf, CommandGene.CharacterClass, 0);
     }
 
-    public ScanSurroundigs(GPConfiguration a_conf, Class a_returnType, int a_subReturnType) throws InvalidConfigurationException {
+    public ScanSurroundings(GPConfiguration a_conf, Class a_returnType, int a_subReturnType) throws InvalidConfigurationException {
         super(a_conf, 0, a_returnType, a_subReturnType, null);
         this.value = 360;
     }

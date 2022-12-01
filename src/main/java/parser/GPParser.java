@@ -37,11 +37,9 @@ public class GPParser {
         try {
             FileWriter writer = new FileWriter(filePath + fileName + ".java");
 
-//            Header="package sample;\r\n" +  "\r\n" +  "import robocode.*;" + "\r\n\n" + "public class " + fileName + " extends Robot {\n";
             Header="package sample;\r\n" +  "\r\n" +  "import robocode.*;" + "\r\n\n";
             writer.write(Header);
             writer.write(input);
-//            writer.write("}");
             writer.close();
 
             System.out.println("Successfully written to the Robot file.");
