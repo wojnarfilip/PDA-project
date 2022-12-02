@@ -4,8 +4,9 @@ import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
+import org.jgap.util.ICloneable;
 
-public class ScanSurroundings extends CommandGene {
+public class ScanSurroundings extends CommandGene implements ICloneable {
     int value;
 
     public ScanSurroundings(GPConfiguration a_conf) throws InvalidConfigurationException {
@@ -29,5 +30,17 @@ public class ScanSurroundings extends CommandGene {
     @Override
     public String toString() {
         return "\t\t\t\tturnGunLeft(360);\n";
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return new ScanSurroundings(
+                    super.getGPConfiguration()
+            );
+        } catch (InvalidConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

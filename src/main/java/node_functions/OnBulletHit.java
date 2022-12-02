@@ -4,8 +4,9 @@ import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
+import org.jgap.util.ICloneable;
 
-public class OnBulletHit extends CommandGene {
+public class OnBulletHit extends CommandGene implements ICloneable {
     private int a_arity;
 
     public OnBulletHit(final GPConfiguration a_conf, int a_arity) throws InvalidConfigurationException {
@@ -29,5 +30,14 @@ public class OnBulletHit extends CommandGene {
     @Override
     public String toString() {
         return "public void onBulletHit(ScannedRobotEvent e){\n\tdouble distance = e.getDistance();\n&1 &2 &3 &4 &5}";
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return new OnBulletHit(super.getGPConfiguration(), this.a_arity);
+        } catch (InvalidConfigurationException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

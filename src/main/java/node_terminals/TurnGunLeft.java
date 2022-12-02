@@ -7,7 +7,7 @@ import org.jgap.gp.impl.ProgramChromosome;
 
 import java.util.Random;
 
-public class TurnGunLeft extends CommandGene {
+public class TurnGunLeft extends CommandGene{
     int value;
 
     private double mean;

@@ -13,11 +13,13 @@ import org.jgap.gp.impl.GPGenotype;
 
 public class GPRunner extends GPProblem {
     private static int numOfTerminals = 5;
-    private static int NUM_OF_GENERATIONS = 1;
+    private static int NUM_OF_GENERATIONS = 5;
     private static int MAX_TREE_DEPTH = 5;
     private static int MIN_TREE_DEPTH = 2;
-    private static float CROSS_OVER_PROB = 0.02f;
-    private static int POP_SIZE = 5000;
+    private static float CROSS_OVER_PROB = 0.1f;
+    private static float MUTATION_PROB = 0.06f;
+    private static int CROSS_MAX_DEPTH= 5;
+    private static int POP_SIZE = 20;
 
     public GPRunner() throws InvalidConfigurationException {
         super(new GPConfiguration());
@@ -43,8 +45,9 @@ public class GPRunner extends GPProblem {
         config.setMaxInitDepth(MAX_TREE_DEPTH);
         config.setPopulationSize(POP_SIZE);
         config.setCrossoverProb(CROSS_OVER_PROB);
-        //config.setMutationProb(MUTATION_PROB);
-        //config.setStrictProgramCreation(true);
+        config.setMaxCrossoverDepth(CROSS_MAX_DEPTH);
+        config.setMutationProb(MUTATION_PROB);
+        config.setStrictProgramCreation(true);
 
         Class[] types = { CommandGene.CharacterClass };
         Class[][] argTypes = { {
@@ -69,7 +72,7 @@ public class GPRunner extends GPProblem {
 
                 new Ahead(config, 70, 30),
                 new Back(config, 50, 25),
-                new Fire(config, 2, 1),
+                new Fire(config, 1, 0.5),
                 new IfDistanceFire(config, 2, 1, 200),
                 new TurnLeft(config, 45, 15),
                 new TurnRight(config, 45, 15),
