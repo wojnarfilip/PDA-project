@@ -37,14 +37,12 @@ public class GPParser {
         try {
             FileWriter writer = new FileWriter(filePath + fileName + ".java");
 
-//            Header="package sample;\r\n" +  "\r\n" +  "import robocode.*;" + "\r\n\n" + "public class " + fileName + " extends Robot {\n";
             Header="package sample;\r\n" +  "\r\n" +  "import robocode.*;" + "\r\n\n";
             writer.write(Header);
             writer.write(input);
-//            writer.write("}");
             writer.close();
 
-            System.out.println("Successfully wrote to the Robot file.");
+            System.out.println("Successfully written to the Robot file.");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -71,7 +69,7 @@ public class GPParser {
         Map<String, String> replaceMap = new HashMap<String, String>();
         replaceMap.put(oldName, newName);
 
-        Path path = Paths.get("/home/fwojnar/PDA/currently_works/PDA-project/src/main/java/sample/EnderTank.java");
+        Path path = Paths.get("D:\\Škola\\FEKT\\MPC-IBE1\\PDA\\Projekt\\PDA-project\\src\\main\\java\\sampleEnderTank.java");
         Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8);
         List<String> replacedLines = lines.map(line -> replaceTag(line, replaceMap))
                 .collect(Collectors.toList());

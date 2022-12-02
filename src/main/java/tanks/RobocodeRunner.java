@@ -16,12 +16,13 @@ import java.nio.file.StandardCopyOption;
 
 public class RobocodeRunner {
 	private static double score;
+	private static boolean SHOW_BEST = false;
 	public static void main(String[] args) throws IOException {
 
-		String individual_tank = "EnderTank";
+		String individual_tank = SHOW_BEST ? "Genesis" : "EnderTank";
 		String enemy_list = "Crazy, Corners, Fire";
 
-		runRobocode(individual_tank, enemy_list, false);
+		runRobocode(individual_tank, enemy_list, true);
 	}
 
 	public static double runRobocode(String individual_tank, String enemy_list, boolean showBattle) throws IOException {
@@ -63,7 +64,7 @@ public class RobocodeRunner {
 		engine.addBattleListener(battleListener);
 
 		// Show the battles
-		engine.setVisible(showBattle);
+		engine.setVisible(SHOW_BEST);
 
 		RobocodeEngine.setLogMessagesEnabled(false);
 
